@@ -1,5 +1,5 @@
 name: 'TestOrchestrator: report test results'
-description: 'Upload JUnit XML, Playwright JSON or to-results.json from any test runner to TestOrchestrator test management, matched to your test cases.'
+description: 'Upload JUnit XML, Playwright JSON or to-results.json test results to TestOrchestrator, matched to your test cases.'
 author: 'Test Orchestrator Ltd'
 branding:
   icon: 'check-square'
