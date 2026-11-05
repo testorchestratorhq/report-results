@@ -1,0 +1,9 @@
+node_modules/
+build/
+coverage/
+*.log
+reports/
+playwright-report/
+test-results/
+__pycache__/
+.pytest_cache/

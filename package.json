@@ -1,0 +1,44 @@
+{
+  "name": "report-results",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub Action: upload JUnit XML, Playwright JSON or to-results.json to TestOrchestrator test management.",
+  "license": "MIT",
+  "author": "Test Orchestrator Ltd (https://testorchestrator.com)",
+  "homepage": "https://testorchestrator.com/docs/api-keys/ci-integrations#github-action",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/testorchestratorhq/report-results.git"
+  },
+  "bugs": {
+    "url": "https://github.com/testorchestratorhq/report-results/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check:dist": "node scripts/build.mjs --check",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "test": "tsc -p tsconfig.test.json && node --test \"build/test/*.test.js\"",
+    "coverage": "tsc -p tsconfig.test.json && node --test --experimental-test-coverage --test-coverage-include=\"build/src/**/*.js\" --test-coverage-exclude=\"build/src/main.js\" --test-coverage-lines=90 --test-coverage-branches=80 \"build/test/*.test.js\""
+  },
+  "dependencies": {
+    "@testorchestrator/playwright-reporter": "1.0.0",
+    "@testorchestrator/results-schema": "1.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.0.0",
+    "esbuild": "0.28.2",
+    "eslint": "^10.14.0",
+    "prettier": "3.9.10",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.72.0"
+  },
+  "overrides": {
+    "minimatch": "^11.0.4"
+  }
+}

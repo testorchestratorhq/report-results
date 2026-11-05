@@ -1,0 +1,27 @@
+name: ci
+
+# Runs on GitHub-hosted runners (this repository is public, so hosted minutes are free).
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run coverage
+      - name: dist/ is the build of src/
+        run: npm run check:dist
+      - run: npm audit --audit-level=low

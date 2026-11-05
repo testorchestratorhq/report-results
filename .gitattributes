@@ -1,0 +1,3 @@
+* text=auto eol=lf
+*.tgz binary
+dist/** -diff linguist-generated=true

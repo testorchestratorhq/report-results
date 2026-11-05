@@ -1,0 +1,67 @@
+name: 'TestOrchestrator: report test results'
+description: 'Upload JUnit XML, Playwright JSON or to-results.json from any test runner to TestOrchestrator test management, matched to your test cases.'
+author: 'Test Orchestrator Ltd'
+branding:
+  icon: 'check-square'
+  color: 'green'
+
+inputs:
+  api-key:
+    description: 'Workspace service key with the ingest:results scope. Pass it from a secret: secrets.TO_API_KEY. It is masked in the log.'
+    required: true
+  project:
+    description: "The project's public id (prj_...), from the project's settings page. Required for an all-projects key; with a project key it must be that key's project."
+    required: true
+  files:
+    description: 'Result files to upload: one or more glob patterns, separated by new lines or commas (for example test-results/**/*.xml). Each file is one upload, in name order.'
+    required: true
+  format:
+    description: 'auto (by extension and content), junit-xml, playwright-json or to-results-json (alias: to-json).'
+    required: false
+    default: 'auto'
+  run-key:
+    description: 'Your id for the logical run. Uploads with the same key land on one run; a closed run takes no more. The default includes the attempt, so "Re-run jobs" gets a new run.'
+    required: false
+    default: '${{ github.run_id }}-${{ github.run_attempt }}'
+  run-name:
+    description: 'Name of a new run. Default: CI · <branch> · #<build>.'
+    required: false
+    default: ''
+  environment:
+    description: "One Environment for every result. Leave it empty for multi-browser results: each result's configuration is matched to an Environment of the same name."
+    required: false
+    default: ''
+  tags:
+    description: 'Comma-separated Automation tag names to attach to the run. Unknown names are reported, never created.'
+    required: false
+    default: ''
+  complete:
+    description: 'true closes the run with the last file, only when every file was uploaded (otherwise the run is left open and the summary says so). Set false in matrix or shard jobs and close the run from a final job.'
+    required: false
+    default: 'true'
+  base-url:
+    description: 'API host.'
+    required: false
+    default: 'https://api.testorchestrator.com'
+  project-url:
+    description: "Optional: your project's address in the app (https://testorchestrator.com/<workspace>/projects/<n>), to produce run-url."
+    required: false
+    default: ''
+  fail-on-ingest-error:
+    description: 'true fails the step when a file cannot be read, an upload is refused or the TestOrchestrator API cannot be reached; false reports it as a warning.'
+    required: false
+    default: 'true'
+
+outputs:
+  run-id:
+    description: 'The run the results went to (the number in the run URL).'
+  run-ref:
+    description: 'The run as the app shows it, for example TR-12.'
+  run-url:
+    description: 'Link to the run, when project-url is set.'
+  counts:
+    description: 'JSON: {"files", "total", "matched", "unmatched", "superseded", "by_outcome": {...}} over all uploads.'
+
+runs:
+  using: 'node24'
+  main: 'dist/index.js'

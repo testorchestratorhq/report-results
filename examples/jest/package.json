@@ -1,0 +1,19 @@
+{
+  "name": "report-results-example-jest",
+  "private": true,
+  "scripts": {
+    "test": "jest --ci --reporters=default --reporters=jest-junit"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "jest-junit": {
+    "outputDirectory": "reports",
+    "outputName": "jest-junit.xml",
+    "addFileAttribute": "true"
+  },
+  "devDependencies": {
+    "jest": "30.5.2",
+    "jest-junit": "17.0.0"
+  }
+}
